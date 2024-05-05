@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddle Unveiled Letter</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #ff1493; /* Deep Pink */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: none; /* Hide the navigation */
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+            position: relative; /* Make section position relative for absolute positioning */
+        }
+        .riddle {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #ff1493; /* Deep Pink */
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        label {
+            color: #ff1493; /* Deep Pink */
+        }
+        #result {
+            color: #ff1493; /* Deep Pink */
+            font-weight: bold;
+        }
+        #collectButton {
+            display: none;
+            background-color: #ff1493; /* Deep Pink */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 20px; /* Add top margin to center vertically */
+        }
+        #letter {
+            display: none; /* Initially hidden */
+        }
+
+        /* Responsive styles */
+        @media only screen and (min-width: 600px) {
+            /* Adjust layout for larger screens */
+            section {
+                max-width: 600px;
+                margin: 0 auto; /* Center the section */
+            }
+            #collectButton {
+                position: relative; /* Change to relative positioning */
+                left: 50%; /* Center horizontally */
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Riddle Unveiled Letter</h1>
+    </header>
+    <section>
+        <div class="riddle" id="riddle1">
+            <p>What comes once in a minute, twice in a moment, but never in a thousand years?</p>
+        </div>
+        <div class="riddle" id="riddle2" style="display:none;">
+            <p>I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?</p>
+        </div>
+        <div class="riddle" id="riddle3" style="display:none;">
+            <p>The more you take, the more you leave behind. What am I?</p>
+        </div>
+        <div id="letter">
+            <!-- Your letter content here -->
+            <p>Congratulations!</p>
+            <p>You've solved all the riddles. Here's the letter:</p>
+            <p>Dear [Name],</p>
+            <p>...</p>
+        </div>
+        <form id="riddleForm" novalidate>
+            <label for="answer">Your Answer:</label>
+            <input type="text" id="answer" name="answer" required>
+            <button type="button" onclick="checkAnswer()">Submit</button>
+        </form>
+        <div id="result" style="display:none;"></div>
+        <button id="collectButton" onclick="revealLetter()">Collect Your Prize</button>
+    </section>
+    <footer>
+        &copy; 2024 Riddle Unveiled Letter. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById("answer").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+        });
+
+        function checkAnswer() {
+            var userAnswer = document.getElementById("answer").value.toLowerCase();
+            var resultDiv = document.getElementById("result");
+            var riddle1 = document.getElementById("riddle1");
+            var riddle2 = document.getElementById("riddle2");
+            var riddle3 = document.getElementById("riddle3");
+            var letterDiv = document.getElementById("letter");
+            var collectButton = document.getElementById("collectButton");
+            var answerInput = document.getElementById("answer");
+            
+            if (riddle1.style.display !== "none") {
+                if (userAnswer === "1") {
+                    resultDiv.textContent = "Well done babe!";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                    riddle1.style.display = "none";
+                    riddle2.style.display = "block";
+                } else {
+                    resultDiv.textContent = "Incorrect! Please enter the correct number.";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                }
+            } else if (riddle2.style.display !== "none") {
+                if (userAnswer === "2") {
+                    resultDiv.textContent = "Correct!";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                    riddle2.style.display = "none";
+                    riddle3.style.display = "block";
+                } else {
+                    resultDiv.textContent = "Incorrect! Please enter the correct number.";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                }
+            } else if (riddle3.style.display !== "none") {
+                if (userAnswer === "3") {
+                    resultDiv.textContent = "Correct!";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                    // Show the collect button
+                    collectButton.style.display = "block";
+                    // Clear the page
+                    clearPage();
+                } else {
+                    resultDiv.textContent = "Incorrect! Please enter the correct number.";
+                    resultDiv.style.color = "#ff1493"; /* Deep Pink */
+                }
+            }
+            resultDiv.style.display = "block";
+            answerInput.value = ""; // Clearing the input field
+        }
+
+        function revealLetter() {
+            var letterDiv = document.getElementById("letter");
+            var collectButton = document.getElementById("collectButton");
+
+            // Hide the collect button
+            collectButton.style.display = "none";
+            // Show the letter
+            letterDiv.style.display = "block";
+        }
+
+        function clearPage() {
+            var section = document.querySelector("section");
+            var form = document.getElementById("riddleForm");
+            var resultDiv = document.getElementById("result");
+            var riddle3 = document.getElementById("riddle3");
+
+            section.removeChild(form);
+            section.removeChild(resultDiv);
+            section.removeChild(riddle3);
+        }
+    </script>
+</body>
+</html>
